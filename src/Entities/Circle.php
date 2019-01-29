@@ -7,12 +7,12 @@ class Circle {
 
     private $radius;
 
-    public function Circle($radius=0.0) {
+    public function __construct($radius=0.0) {
         $this->radius = $radius;
     }
 
     /**
-     * @return mixed
+     * @return float
      */
     public function getRadius(): float
     {
@@ -24,7 +24,7 @@ class Circle {
      */
     public function setRadius($radius): void
     {
-        $this->radius = $radius;
+        $this->radius = floatval($radius);
     }
 
 

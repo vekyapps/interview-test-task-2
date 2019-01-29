@@ -8,7 +8,7 @@ class Triangle {
     private $b;
     private $c;
 
-    public function Triangle($a=0.0, $b=0.0, $c=0.0) {
+    public function  __construct($a=0.0, $b=0.0, $c=0.0) {
         $this->a = $a;
         $this->b = $b;
         $this->c = $c;
