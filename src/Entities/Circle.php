@@ -3,29 +3,61 @@
 namespace App\Entities;
 
 
-class Circle {
+/**
+ * Class Circle
+ * @package App\Entities
+ */
+class Circle implements MathBodyInterface {
 
+    use MathBodyTrait;
+
+    /**
+     * @var float
+     */
     private $radius;
 
-    public function __construct($radius=0.0) {
+
+    /**
+     * @var string
+     */
+    protected $type = "circle";
+
+    /**
+     * Circle constructor.
+     * @param float $radius
+     */
+    public function __construct(float $radius = 0.0) {
+        $this->radius = $radius;
+    }
+
+
+    /**
+     * @return float
+     */
+    public function getRadius(): float {
+        return $this->radius;
+    }
+
+
+    /**
+     * @param float $radius
+     */
+    public function setRadius(float $radius): void {
         $this->radius = $radius;
     }
 
     /**
      * @return float
      */
-    public function getRadius(): float
-    {
-        return $this->radius;
+    public function getSurface(): float {
+        return pi() * pow($this->getRadius(), 2);
     }
 
     /**
-     * @param mixed $radius
+     * @return float
      */
-    public function setRadius($radius): void
-    {
-        $this->radius = floatval($radius);
+    public function getCircumference(): float {
+        return 2 * pi() * $this->radius;
     }
-
 
 }
