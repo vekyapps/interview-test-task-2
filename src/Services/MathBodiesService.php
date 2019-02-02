@@ -2,26 +2,30 @@
 
 namespace App\Services;
 
-use App\Entities\Circle;
-use App\Entities\Triangle;
+use App\Entities\MathBodyInterface;
 
+/**
+ * Class MathBodiesService
+ * @package App\Services
+ */
 class MathBodiesService {
 
-    public static function getCircleSurface(Circle &$circle) {
-        return pi() * pow($circle->getRadius(), 2);
+    /**
+     * @param MathBodyInterface $mathBodyA
+     * @param MathBodyInterface $mathBodyB
+     * @return float
+     */
+    public static function sumMathBodySurfaces(MathBodyInterface $mathBodyA, MathBodyInterface $mathBodyB): float {
+        return $mathBodyA->getSurface() + $mathBodyB->getSurface();
     }
 
-    public static function getCircleCircumference(Circle &$circle) {
-        return 2 * pi() * $circle->getRadius();
+    /**
+     * @param MathBodyInterface $mathBodyA
+     * @param MathBodyInterface $mathBodyB
+     * @return float
+     */
+    public static function sumMathBodyCircumferences(MathBodyInterface $mathBodyA, MathBodyInterface $mathBodyB): float {
+        return $mathBodyA->getCircumference() + $mathBodyB->getCircumference();
     }
 
-    public static function getTriangleSurface(Triangle &$triangle) {
-        $s = ($triangle->getA() + $triangle->getB() + $triangle->getC()) / 2;
-        $surface = sqrt($s*($s - $triangle->getA())*($s - $triangle->getB())*($s - $triangle->getC()));
-        return $surface;
-    }
-
-    public static function getTriangleCircumference(Triangle &$triangle) {
-        return $triangle->getA() + $triangle->getB() + $triangle->getC();
-    }
 }
