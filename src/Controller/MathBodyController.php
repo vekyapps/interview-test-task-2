@@ -2,49 +2,37 @@
 
 namespace App\Controller;
 
+use App\Services\MathBodiesService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 
-use App\Services\MathBodiesService;
 use App\Entities\Triangle;
 use App\Entities\Circle;
 
 class MathBodyController extends AbstractController {
 
     /**
-     * @Route("/circle/{radius}", name="circle")
+     * @Route("/circle/{radius}", name="circle", requirements={"radius"="\d+\.\d+"})
      */
     public function circle($radius) {
         $circle = new Circle(floatval($radius));
-
-        $circumference = MathBodiesService::getCircleCircumference($circle);
-        $surface = MathBodiesService::getCircleSurface($circle);
-
-        return $this->json([
-            'type' => 'circle',
-            'radius' => $radius,
-            'surface' => round($surface, 2),
-            'circumference' => round($circumference, 2)
+        $result = array_merge($circle->toArray(), [
+            'surface' => number_format($circle->getSurface(), 2),
+            'circumference' => number_format($circle->getCircumference(), 2)
         ]);
+        return $this->json($result);
     }
 
     /**
-     * @Route("/triangle/{a}/{b}/{c}", name="triangle")
+     * @Route("/triangle/{a}/{b}/{c}", name="triangle", requirements={"a"="\d+\.\d+","b"="\d+\.\d+","c"="\d+\.\d+"})
      */
     public function triangle($a, $b, $c) {
-        $triangle = new Triangle($a, $b, $c);
-
-        $circumference = MathBodiesService::getTriangleCircumference($triangle);
-        $surface = MathBodiesService::getTriangleSurface($triangle);
-
-        return $this->json([
-            'type' => 'triangle',
-            'a' => $a,
-            'b' => $b,
-            'c' => $c,
-            'surface' => round($surface, 2),
-            'circumference' => round($circumference, 2)
+        $triangle = new Triangle(floatval($a), floatval($b), floatval($c));
+        $result = array_merge($triangle->toArray(), [
+            'surface' => number_format($triangle->getSurface(), 2),
+            'circumference' => number_format($triangle->getCircumference(), 2)
         ]);
+        return $this->json($result);
     }
 
 }
